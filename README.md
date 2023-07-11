@@ -1,0 +1,1 @@
+Simple unary GRPC SERVICE
