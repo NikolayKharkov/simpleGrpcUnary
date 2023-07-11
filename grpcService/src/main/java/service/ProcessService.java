@@ -40,10 +40,11 @@ public class ProcessService extends ProcessServiceGrpc.ProcessServiceImplBase {
     }
 
     private BigDecimal getBigDecimalFromProcess(Process process) {
-        ByteString byteString = process.getSum().getValue();
-        byte[] bytes = byteString.toByteArray();
-        String stringValue = Base64.getEncoder().encodeToString(bytes);
-        return new BigDecimal(stringValue);
+        java.math.MathContext mc = new java.math.MathContext(process.getSum().getPrecision());
+        return new java.math.BigDecimal(
+                new java.math.BigInteger(process.getSum().toByteArray()),
+                process.getSum().getScale(),
+                mc);
     }
 
 }

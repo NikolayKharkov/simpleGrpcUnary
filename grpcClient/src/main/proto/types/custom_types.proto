@@ -1,0 +1,20 @@
+/**
+Файла для генерации кастомных типов данных, например UUID и BigDecimal
+ */
+syntax = "proto3";
+
+package customTypes;
+
+option java_multiple_files = true;
+option java_package = "ru.custom_types";
+
+message ProtoUUID {
+  string value = 1;
+}
+
+message ProtoBigDecimal {
+  int32 scale = 1;
+  int32 precision = 2;
+  bytes value = 3;
+}
+

@@ -12,6 +12,7 @@
 
     <modules>
         <module>grpcService</module>
+        <module>grpcClient</module>
     </modules>
 
     <properties>

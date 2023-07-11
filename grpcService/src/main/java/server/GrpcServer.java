@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class ServerFactory {
+public class GrpcServer {
     private static final String PROPERTIES_FILE_PATH = "grpcService/src/main/resources/application.properties";
     private static final String SERVICE_PORT = "service.port";
     public static void main(String[] args) throws IOException, InterruptedException {
