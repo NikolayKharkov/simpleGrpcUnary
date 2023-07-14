@@ -1,8 +1,10 @@
-package inceptors;
+package ru.inceptors;
 
 import com.google.common.base.Strings;
 import io.grpc.*;
+import net.devh.boot.grpc.server.interceptor.GrpcGlobalServerInterceptor;
 
+@GrpcGlobalServerInterceptor
 public class MyServerInterceptor implements ServerInterceptor {
     @Override
     public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(ServerCall<ReqT, RespT> serverCall, Metadata metadata, ServerCallHandler<ReqT, RespT> serverCallHandler) {

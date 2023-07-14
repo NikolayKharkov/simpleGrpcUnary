@@ -1,20 +1,20 @@
-package service;
+package ru.service;
 
-import com.google.protobuf.ByteString;
 import io.grpc.stub.StreamObserver;
+import net.devh.boot.grpc.server.service.GrpcService;
 import ru.business_types.Process;
 import ru.business_types.ProcessStatus;
+import ru.custom_types.ProtoBigDecimal;
 import ru.process_service.ProcessServiceGrpc;
 
 import java.math.BigDecimal;
-import java.util.Base64;
+import java.math.BigInteger;
+import java.math.MathContext;
 
-
+@GrpcService
 public class ProcessService extends ProcessServiceGrpc.ProcessServiceImplBase {
-    private final int ZERO = 0;
-    private final int OK_STATUS = ZERO;
-    private final int BAD_STATUS = 1;
-    private final BigDecimal BIG_DECIMAL_ZERO = new BigDecimal(ZERO);
+    private static final int OK_STATUS = 0;
+    private static final int BAD_STATUS = 1;
 
     @Override
     public void getProcessStatus(Process request, StreamObserver<ProcessStatus> responseObserver) {
@@ -36,14 +36,15 @@ public class ProcessService extends ProcessServiceGrpc.ProcessServiceImplBase {
 
 
     private boolean isLowerThanZero(BigDecimal bigDecimal) {
-        return bigDecimal.compareTo(BIG_DECIMAL_ZERO) < ZERO;
+        return bigDecimal.compareTo(BigDecimal.ZERO) < 0;
     }
 
     private BigDecimal getBigDecimalFromProcess(Process process) {
-        java.math.MathContext mc = new java.math.MathContext(process.getSum().getPrecision());
-        return new java.math.BigDecimal(
-                new java.math.BigInteger(process.getSum().toByteArray()),
-                process.getSum().getScale(),
+        ProtoBigDecimal sum = process.getSum();
+        MathContext mc = new MathContext(sum.getPrecision());
+        return new BigDecimal(
+                new BigInteger(sum.toByteArray()),
+                sum.getScale(),
                 mc);
     }
 
